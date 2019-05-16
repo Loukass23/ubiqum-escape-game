@@ -9,6 +9,12 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { nextStep } from '../store/action/puzzleActions'
 import { puzzles } from '../config/puzzlesUbiqum'
+import moment from 'moment'
+import { compose } from 'redux'
+import { firestoreConnect } from 'react-redux-firebase'
+import { addResult } from '../store/action/resultAction'
+
+
 
 
 
@@ -70,13 +76,16 @@ class Puzzle extends Component {
             name: '',
             error: '',
             try: 5,
-            solution: null
+            solution: null,
+            puzzle: null,
+            timer: null
 
         }
     }
     componentDidMount() {
-        const solution = puzzles[this.props.puzzle.id].solution
-        this.setState({ solution })
+        // const solution = puzzles[this.props.puzzle.id].solution
+        // const puzzle = puzzles[this.props.puzzle.id]
+        // this.setState({ solution, puzzle })
     }
     handleChange = (e) => {
         this.setState({
@@ -84,12 +93,32 @@ class Puzzle extends Component {
         })
     }
     validate = () => {
-
+        const solution = puzzles[this.props.puzzle.id].solution
+        const puzzle = puzzles[this.props.puzzle.id]
+        this.setState({ solution, puzzle })
         let name = this.state.name
-        console.log(this.state.solution)
-        if (this.state.solution.includes(name.toLowerCase())) {
-            this.setState({ try: 5 })
-            this.props.nextStep(this.props.puzzle.id + 1)
+
+        console.log(solution)
+        console.log(name)
+        if (solution.includes(name.toLowerCase())) {
+            if (!puzzles[this.props.puzzle.id + 1]) {
+                let timer = moment.utc(moment(this.props.puzzle.startTime, "DD/MM/YYYY HH:mm:ss")
+                    .diff(moment(this.props.team.startTime, "DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss")
+
+                let result = {
+                    time: timer,
+                    team: this.props.team.team.name
+                }
+                console.log('done')
+                this.props.addResult(result)
+
+            }
+            else {
+                this.setState({ try: 5, error: "" })
+                this.props.nextStep(this.props.puzzle.id + 1)
+            }
+
+
         }
         else if (this.state.try === 0) {
             this.setState({
@@ -105,8 +134,8 @@ class Puzzle extends Component {
 
     render() {
         const { classes, puzzle } = this.props
+
         const thisPuzzle = puzzles[puzzle.id]
-        console.log(thisPuzzle)
         return (
             <Paper className={classes.demo} >
                 <Grid container
@@ -124,11 +153,7 @@ class Puzzle extends Component {
                             {thisPuzzle.decription}
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} >
-                        <Typography color="primary" variant="h6" gutterBottom>
 
-                        </Typography>
-                    </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
                             fullWidth
@@ -156,6 +181,7 @@ class Puzzle extends Component {
                             Hack
                          </Button>
                     </Grid>
+
                 </Grid>
             </Paper>
         )
@@ -164,14 +190,22 @@ class Puzzle extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
 
-        nextStep: (id) => dispatch(nextStep(id))
+        nextStep: (id) => dispatch(nextStep(id)),
+        addResult: (result) => dispatch(addResult(result)),
 
     }
 }
 const mapStateToProps = (state) => {
     console.log(state)
     return {
-        puzzle: state.puzzle
+        puzzle: state.puzzle,
+        team: state.team
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Puzzle))
+// export default compose(
+//     connect(mapStateToProps, mapDispatchToProps),
+//     firestoreConnect([
+//         // { collection: 'cities', orderBy: ['createdAt', 'desc'] }
+//     ]),
+// )(withStyles(styles)(Puzzle))

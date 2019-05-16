@@ -10,16 +10,16 @@ function App() {
   return (
 
     <div className="App">
-    
+
       <video autoPlay muted loop id="myVideo"
-       src="https://ubiqum.com/assets/uploads/2018/10/ubiqum-home_968_08.mp4" >
+        src="https://ubiqum.com/assets/uploads/2018/10/ubiqum-home_968_08.mp4" >
 
       </video>
-     <div class="content">
-      <Paper >
-      <Header  />
-      <Landing />
-      </Paper>
+      <div className="content">
+        <Paper >
+          <Header />
+          <Landing />
+        </Paper>
       </div>
 
     </div>

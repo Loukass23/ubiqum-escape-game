@@ -13,7 +13,7 @@ class Header extends Component {
                     <div className="header">
                         <Anime
                             opacity={[0, 1]}
-                            translateY={[-100, 0]}
+                            translateY={[100, 0]}
                             delay={(t, i) => 400 + i * 6000}
                             easing={'easeInOutQuad'}
                             duration={1000}

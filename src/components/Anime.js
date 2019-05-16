@@ -9,7 +9,6 @@ class Anime extends Component {
 
     // Current Anime DOM Targets
     this.targets = [];
-
     // Time based children store
     let { children } = props;
     if (!Array.isArray(children)) children = [children];

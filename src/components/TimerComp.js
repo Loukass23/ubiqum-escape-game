@@ -3,6 +3,7 @@ import Timer from 'react-compound-timer'
 import Typography from '@material-ui/core/Typography';
 
 
+
 export default function TimerComp() {
     return (
         <div>
@@ -12,12 +13,12 @@ export default function TimerComp() {
                 {({ start, resume, pause, stop, reset, timerState }) => (
                     <React.Fragment>
                         <div>
-                             <Typography color="primary" variant="h6" gutterBottom>
-                             <Timer.Minutes /> minutes  <Timer.Seconds /> seconds
-                        </Typography>
-                    
+                            <Typography color="primary" variant="h6" gutterBottom>
+                                <Timer.Minutes /> :  <Timer.Seconds />
+                            </Typography>
 
-            </div>
+
+                        </div>
                         {/* <div>{timerState}</div> */}
                         <br />
 

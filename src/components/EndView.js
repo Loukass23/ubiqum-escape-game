@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
-import { addTeam } from '../store/action/teamActions'
+import { nextStep } from '../store/action/puzzleActions'
 
 
 const styles = theme => ({
@@ -60,14 +60,12 @@ const styles = theme => ({
     },
 });
 
-class AddTeam extends Component {
+class EndView extends Component {
     constructor(props) {
         super(props)
-         this.form = React.createRef();
-        this.validate = this.validate.bind(this);
 
         this.state = {
-            name: ''
+
         }
     }
     handleChange = (e) => {
@@ -75,17 +73,14 @@ class AddTeam extends Component {
             [e.target.id]: e.target.value
         })
     }
-    validate = () => { 
-        if (this.form.current.reportValidity()){
-            this.props.addTeam(this.state)
-        }
-        
+    validate = () => {
+
     }
 
+
     render() {
-        const { classes } = this.props
+        const { classes, team } = this.props
         return (
-            <form ref={this.form}>
             <Paper className={classes.demo} >
                 <Grid container
                     spacing={0}
@@ -95,48 +90,44 @@ class AddTeam extends Component {
                 >
 
                     <Grid item xs={12} >
-                    </Grid>
-                    <Grid item xs={12} >
                         <Typography color="primary" variant="h6" gutterBottom>
-                            Choose Your Hacker Team Name
+                            Congratulation {team.name}, you have successfully hacked into Ubliqum
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+
+                    {/* <Grid item xs={12} sm={6}>
                         <TextField
-                            fullWidth
-                            required
-                            id="name"
-                            label="Name"
+                            id="password"
+                            label="Password"
                             className={classes.textField}
+                            type="password"
+                            autoComplete="current-password"
                             margin="normal"
-                            type="text"
                             onChange={this.handleChange}
                         />
                     </Grid>
+
                     <Grid item xs={12}>
                         <Button variant="contained" onClick={this.validate} color="primary" className={classes.button}>
-                           Start Hacking
+                            Hack
                          </Button>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </Paper>
-            </form>
         )
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
 
-        addTeam: (team) => dispatch(addTeam(team))
+        nextStep: (id) => dispatch(nextStep(id))
 
     }
 }
 const mapStateToProps = (state) => {
     console.log(state)
     return {
-        auth: state.firebase.auth,
-        // cities: state.firestore.ordered.cities,
-
+        team: state.team.team
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AddTeam))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(EndView))

@@ -6,6 +6,7 @@ import Puzzle from '../components/Puzzle'
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import LinearProgress from '@material-ui/core/LinearProgress';
+import EndView from '../components/EndView'
 
 
 
@@ -20,18 +21,27 @@ const styles = theme => ({
 class Landing extends Component {
 
   render() {
-    const { team, puzzle } = this.props
-    console.log(puzzle)
-    const teamComp = (team ? <FindPwd /> :
-      <AddTeam />)
+    const { team, puzzle, result } = this.props
 
-    const puzzles = (puzzle.id ? <Puzzle /> : teamComp)
+
+    const teamComp = (team ? <FindPwd /> : <AddTeam />)
+
+    const puzzles = (puzzle.id && !result ? <Puzzle /> : teamComp)
+
     return (
-      <div>
-        
-        {puzzles}
-{team && <Timer />}
-      </div>
+      <React.Fragment>
+
+        {!result &&
+          <div>
+            {puzzles}
+            {team && <Timer />}
+          </div>
+        }
+        {result &&
+          <EndView />
+        }
+
+      </React.Fragment>
     )
   }
 }
@@ -40,6 +50,7 @@ const mapStateToProps = (state) => {
   return {
     team: state.team.team,
     puzzle: state.puzzle,
+    result: state.results.result
 
 
   }
