@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import LinearProgress from '@material-ui/core/LinearProgress';
 import EndView from '../components/EndView'
+import Scoreboard from '../components/Scoreboard'
 
 
 
@@ -31,6 +32,8 @@ class Landing extends Component {
     return (
       <React.Fragment>
 
+
+
         {!result &&
           <div>
             {puzzles}
@@ -38,7 +41,10 @@ class Landing extends Component {
           </div>
         }
         {result &&
-          <EndView />
+          <React.Fragment>
+            <EndView />
+            <Scoreboard />
+          </React.Fragment>
         }
 
       </React.Fragment>

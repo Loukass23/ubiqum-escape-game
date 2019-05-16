@@ -79,7 +79,7 @@ class EndView extends Component {
 
 
     render() {
-        const { classes, team } = this.props
+        const { classes, team, result } = this.props
         return (
             <Paper className={classes.demo} >
                 <Grid container
@@ -91,7 +91,8 @@ class EndView extends Component {
 
                     <Grid item xs={12} >
                         <Typography color="primary" variant="h6" gutterBottom>
-                            Congratulation {team.name}, you have successfully hacked into Ubliqum
+                            Congratulation {result.team}, you have successfully hacked into Ubliqum in {result.time}
+
                         </Typography>
                     </Grid>
 
@@ -127,7 +128,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     console.log(state)
     return {
-        team: state.team.team
+        team: state.team.team,
+        result: state.results.result
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(EndView))

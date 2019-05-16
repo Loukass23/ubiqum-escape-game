@@ -102,7 +102,8 @@ class Puzzle extends Component {
         console.log(name)
         if (solution.includes(name.toLowerCase())) {
             if (!puzzles[this.props.puzzle.id + 1]) {
-                let timer = moment.utc(moment(this.props.puzzle.startTime, "DD/MM/YYYY HH:mm:ss")
+                let now = new Date()
+                let timer = moment.utc(moment(now, "DD/MM/YYYY HH:mm:ss")
                     .diff(moment(this.props.team.startTime, "DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss")
 
                 let result = {
@@ -146,11 +147,11 @@ class Puzzle extends Component {
                 >
 
                     <Grid item xs={12} >
-                        <Typography color="primary" variant="h2" gutterBottom>
-                            Puzzle {puzzle.id}
+                        <Typography color="primary" variant="h3" gutterBottom>
+                            {thisPuzzle.title}
                         </Typography>
-                        <Typography color="primary" variant="h4" gutterBottom>
-                            {thisPuzzle.decription}
+                        <Typography color="primary" variant="subtitle1" gutterBottom>
+                            {thisPuzzle.description}
                         </Typography>
                     </Grid>
 
@@ -159,7 +160,7 @@ class Puzzle extends Component {
                             fullWidth
                             required
                             id="name"
-                            label="Name"
+                            label="answer"
                             className={classes.textField}
                             margin="normal"
                             type="text"
@@ -167,21 +168,27 @@ class Puzzle extends Component {
                         />
                     </Grid>
                     <Grid item xs={12} >
-                        <Typography color="primary" variant="h6" gutterBottom>
+                        <Typography color="secondary" variant="h6" gutterBottom>
                             {this.state.error}
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} >
+                    <Grid item xs={6} >
                         <Typography color="primary" variant="subtitle1" gutterBottom>
                             Tries Left: {this.state.try}
                         </Typography>
                     </Grid>
-                    <Grid item xs={12}>
+
+                    <Grid item xs={6}>
                         <Button variant="contained" onClick={this.validate} color="primary" className={classes.button}>
                             Hack
                          </Button>
                     </Grid>
+                    <Grid item xs={12} >
+                        <Typography color="primary" variant="subtitle2" gutterBottom>
+                            Puzzle {puzzle.id}
 
+                        </Typography>
+                    </Grid>
                 </Grid>
             </Paper>
         )

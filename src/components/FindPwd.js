@@ -80,7 +80,6 @@ class FindPwd extends Component {
         let pwd = this.state.password
         console.log(pwd)
         if (passwords.includes(pwd.toLowerCase())) {
-            console.log('youre in the mainframe')
             this.props.nextStep(1)
         }
         else if (this.state.try === 0) {
@@ -90,7 +89,7 @@ class FindPwd extends Component {
         }
         else {
             let tries = this.state.try - 1
-            this.setState({ error: 'Not the right password', try: tries })
+            this.setState({ error: 'wrong password', try: tries })
         }
     }
 
@@ -128,7 +127,7 @@ class FindPwd extends Component {
                         />
                     </Grid>
                     <Grid item xs={12} >
-                        <Typography color="primary" variant="h6" gutterBottom>
+                        <Typography color="secondary" variant="h6" gutterBottom>
                             {this.state.error}
                         </Typography>
                     </Grid>
