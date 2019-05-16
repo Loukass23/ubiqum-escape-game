@@ -1,25 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Landing from './pages/Landing';
+import AddTeam from './components/AddTeam';
+import Header from './components/Header';
+import Paper from '@material-ui/core/Paper';
+
 
 function App() {
   return (
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    
+      <video autoPlay muted loop id="myVideo"
+       src="https://ubiqum.com/assets/uploads/2018/10/ubiqum-home_968_08.mp4" >
+
+      </video>
+     <div class="content">
+      <Paper >
+      <Header  />
+      <Landing />
+      </Paper>
+      </div>
+
     </div>
+
   );
 }
 
