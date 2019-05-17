@@ -4,14 +4,11 @@ import Button from '@material-ui/core/Button';
 import { Grid } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { nextStep } from '../store/action/puzzleActions'
 import { puzzles } from '../config/puzzlesUbiqum'
 import moment from 'moment'
-import { compose } from 'redux'
-import { firestoreConnect } from 'react-redux-firebase'
 import { addResult } from '../store/action/resultAction'
 
 
@@ -28,18 +25,7 @@ const styles = theme => ({
         padding: 20
 
     },
-    // textField: {
-    //     marginLeft: theme.spacing.unit,
-    //     marginRight: theme.spacing.unit,
-
-    // },
-    // textArea: {
-    //     marginLeft: theme.spacing.unit,
-    //     marginRight: theme.spacing.unit,
-    //     margin: 8
-
-    // },
-    input: {
+        input: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         display: 'none',
@@ -53,18 +39,6 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         marginTop: 12,
-    },
-    progress: {
-
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        marginTop: 20,
-    },
-    dense: {
-        marginTop: 19,
-    },
-    menu: {
-        width: 200,
     },
 });
 
@@ -82,15 +56,16 @@ class Puzzle extends Component {
 
         }
     }
-    componentDidMount() {
-        // const solution = puzzles[this.props.puzzle.id].solution
-        // const puzzle = puzzles[this.props.puzzle.id]
-        // this.setState({ solution, puzzle })
-    }
+   
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
         })
+    }
+    _handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            this.validate()
+        }
     }
     validate = () => {
         const solution = puzzles[this.props.puzzle.id].solution
@@ -135,7 +110,6 @@ class Puzzle extends Component {
 
     render() {
         const { classes, puzzle } = this.props
-
         const thisPuzzle = puzzles[puzzle.id]
         return (
             <Paper className={classes.demo} >
@@ -165,10 +139,11 @@ class Puzzle extends Component {
                             margin="normal"
                             type="text"
                             onChange={this.handleChange}
+                            onKeyDown={this._handleKeyDown}
                         />
                     </Grid>
                     <Grid item xs={12} >
-                        <Typography color="secondary" variant="h6" gutterBottom>
+                        <Typography color="error" variant="h6" gutterBottom>
                             {this.state.error}
                         </Typography>
                     </Grid>
@@ -210,9 +185,3 @@ const mapStateToProps = (state) => {
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Puzzle))
-// export default compose(
-//     connect(mapStateToProps, mapDispatchToProps),
-//     firestoreConnect([
-//         // { collection: 'cities', orderBy: ['createdAt', 'desc'] }
-//     ]),
-// )(withStyles(styles)(Puzzle))

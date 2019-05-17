@@ -1,9 +1,11 @@
 import React from 'react';
 import './App.css';
 import Landing from './pages/Landing';
-import AddTeam from './components/AddTeam';
 import Header from './components/Header';
 import Paper from '@material-ui/core/Paper';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import theme from './theme';
+
 
 
 function App() {
@@ -16,10 +18,12 @@ function App() {
 
       </video>
       <div className="content">
-        <Paper >
-          <Header />
-          <Landing />
-        </Paper>
+        <MuiThemeProvider theme={theme}>
+          <Paper >
+            <Header />
+            <Landing />
+          </Paper>
+        </MuiThemeProvider>
       </div>
 
     </div>

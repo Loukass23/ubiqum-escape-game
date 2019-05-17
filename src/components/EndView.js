@@ -16,21 +16,6 @@ const styles = theme => ({
         flexWrap: 'wrap',
         margin: 20
     },
-    demo: {
-        padding: 20
-
-    },
-    // textField: {
-    //     marginLeft: theme.spacing.unit,
-    //     marginRight: theme.spacing.unit,
-
-    // },
-    // textArea: {
-    //     marginLeft: theme.spacing.unit,
-    //     marginRight: theme.spacing.unit,
-    //     margin: 8
-
-    // },
     input: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
@@ -45,19 +30,7 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         marginTop: 12,
-    },
-    progress: {
-
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        marginTop: 20,
-    },
-    dense: {
-        marginTop: 19,
-    },
-    menu: {
-        width: 200,
-    },
+    }
 });
 
 class EndView extends Component {
@@ -77,7 +50,6 @@ class EndView extends Component {
 
     }
 
-
     render() {
         const { classes, team, result } = this.props
         return (
@@ -91,7 +63,7 @@ class EndView extends Component {
 
                     <Grid item xs={12} >
                         <Typography color="primary" variant="h6" gutterBottom>
-                            Congratulation {result.team}, you have successfully hacked into Ubliqum in {result.time}
+                            Congratulations {result.team}, you have successfully hacked into Ubliqum in {result.time}
 
                         </Typography>
                     </Grid>
@@ -126,7 +98,6 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         team: state.team.team,
         result: state.results.result

@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import { Grid } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { nextStep } from '../store/action/puzzleActions'
@@ -16,21 +15,6 @@ const styles = theme => ({
         flexWrap: 'wrap',
         margin: 20
     },
-    demo: {
-        padding: 20
-
-    },
-    // textField: {
-    //     marginLeft: theme.spacing.unit,
-    //     marginRight: theme.spacing.unit,
-
-    // },
-    // textArea: {
-    //     marginLeft: theme.spacing.unit,
-    //     marginRight: theme.spacing.unit,
-    //     margin: 8
-
-    // },
     input: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
@@ -76,9 +60,13 @@ class FindPwd extends Component {
             [e.target.id]: e.target.value
         })
     }
+    _handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            this.validate()
+        }
+    }
     validate = () => {
         let pwd = this.state.password
-        console.log(pwd)
         if (passwords.includes(pwd.toLowerCase())) {
             this.props.nextStep(1)
         }
@@ -124,10 +112,11 @@ class FindPwd extends Component {
                             autoComplete="current-password"
                             margin="normal"
                             onChange={this.handleChange}
+                            onKeyDown={this._handleKeyDown}
                         />
                     </Grid>
                     <Grid item xs={12} >
-                        <Typography color="secondary" variant="h6" gutterBottom>
+                        <Typography color="error" variant="h6" gutterBottom>
                             {this.state.error}
                         </Typography>
                     </Grid>
@@ -154,7 +143,6 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         team: state.team
     }

@@ -40,45 +40,12 @@ class Header extends Component {
 
                             </div>
                         </Anime>
-                        <Anime opacity={[0, 1]} delay={5000} duration={10000}>
-                            <div className="header-right-column d-flex" id="built-whith">
-
-                            </div>
-                        </Anime>
-                    </div>
-                    <Anime
-                        opacity={[0, 0.5]}
-                        translateY={[100, 0]}
-                        easing={'easeInOutQuad'}
-                        duration={1000}
-                        delay={5000}
-                    >
-                        <div className="footer">
-                            <a href="#about"><i className="fa fa-chevron-down" id="chevron"></i></a>
                         </div>
-                    </Anime>
                 </div>
-                <Anime translateX={[{ value: 0 }, { value: 5000, duration: 5000 }]}>
-                    <div className="app-slide" ></div>
-                </Anime>
             </div>
         );
     }
 }
 
-/*
-<Anime
-                opacity={{
-                  delay: 4000,
-                  value: 0.5
-                }}
-                translateX={[1000, 0]}
-                delay={3000}
-                easing={'easeInOutQuad'}
-                duration={1000}>
-                <h2>Open source enthusiast, creative, kind</h2>
-              </Anime>
-              <h1>IjzerenHein</h1>
-*/
 
 export default Header;

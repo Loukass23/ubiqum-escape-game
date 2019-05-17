@@ -16,10 +16,7 @@ export default function TimerComp() {
                             <Typography color="primary" variant="h6" gutterBottom>
                                 <Timer.Minutes /> :  <Timer.Seconds />
                             </Typography>
-
-
                         </div>
-                        {/* <div>{timerState}</div> */}
                         <br />
 
                     </React.Fragment>

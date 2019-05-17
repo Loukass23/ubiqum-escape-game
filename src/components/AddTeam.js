@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import { Grid } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { addTeam } from '../store/action/teamActions'
@@ -16,21 +15,6 @@ const styles = theme => ({
         flexWrap: 'wrap',
         margin: 20
     },
-    demo: {
-        padding: 20
-
-    },
-    // textField: {
-    //     marginLeft: theme.spacing.unit,
-    //     marginRight: theme.spacing.unit,
-
-    // },
-    // textArea: {
-    //     marginLeft: theme.spacing.unit,
-    //     marginRight: theme.spacing.unit,
-    //     margin: 8
-
-    // },
     input: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
@@ -45,25 +29,13 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         marginTop: 12,
-    },
-    progress: {
-
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        marginTop: 20,
-    },
-    dense: {
-        marginTop: 19,
-    },
-    menu: {
-        width: 200,
-    },
+    }
 });
 
 class AddTeam extends Component {
     constructor(props) {
         super(props)
-         this.form = React.createRef();
+        this.form = React.createRef();
         this.validate = this.validate.bind(this);
 
         this.state = {
@@ -75,51 +47,57 @@ class AddTeam extends Component {
             [e.target.id]: e.target.value
         })
     }
-    validate = () => { 
-        if (this.form.current.reportValidity()){
+    _handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            this.validate()
+        }
+    }
+    validate = () => {
+        if (this.form.current.reportValidity()) {
             this.props.addTeam(this.state)
         }
-        
+
     }
 
     render() {
         const { classes } = this.props
         return (
             <form ref={this.form}>
-            <Paper className={classes.demo} >
-                <Grid container
-                    spacing={0}
-                    alignItems="center"
-                    justify="center"
+                <Paper className={classes.demo} >
+                    <Grid container
+                        spacing={0}
+                        alignItems="center"
+                        justify="center"
 
-                >
+                    >
 
-                    <Grid item xs={12} >
-                    </Grid>
-                    <Grid item xs={12} >
-                        <Typography color="primary" variant="h6" gutterBottom>
-                            Choose Your Hacker Team Name
+                        <Grid item xs={12} >
+                        </Grid>
+                        <Grid item xs={12} >
+                            <Typography color="primary" variant="h6" gutterBottom>
+                                Choose Your Hacker Team Name
                         </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            fullWidth
-                            required
-                            id="name"
-                            label="Name"
-                            className={classes.textField}
-                            margin="normal"
-                            type="text"
-                            onChange={this.handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button variant="contained" onClick={this.validate} color="primary" className={classes.button}>
-                           Start Hacking
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                fullWidth
+                                required
+                                id="name"
+                                label="Name"
+                                className={classes.textField}
+                                margin="normal"
+                                type="text"
+                                onChange={this.handleChange}
+                                onKeyDown={this._handleKeyDown}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button variant="contained" onClick={this.validate} color="primary" className={classes.button}>
+                                Start Hacking
                          </Button>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </Paper>
+                </Paper>
             </form>
         )
     }
@@ -134,8 +112,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     console.log(state)
     return {
-        auth: state.firebase.auth,
-        // cities: state.firestore.ordered.cities,
+
 
     }
 }

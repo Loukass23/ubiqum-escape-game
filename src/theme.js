@@ -1,7 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import indigo from '@material-ui/core/colors/indigo';
-import pink from '@material-ui/core/colors/pink';
-import green from '@material-ui/core/colors/green';
+
 
 
 const defaultTheme = createMuiTheme({})
@@ -28,7 +26,7 @@ const theme = createMuiTheme({
     palette: {
         primary: {
             // light: will be calculated from palette.primary.main,
-            main: '#ad1457',
+            main: '#6AA6C9',
             // dark: will be calculated from palette.primary.main,
             // contrastText: will be calculated to contrast with palette.primary.main
         },
@@ -43,23 +41,6 @@ const theme = createMuiTheme({
 
 });
 
-// const theme = {
-//     ...defaultTheme,
-//     overrides: {
-//         MuiTypography: {
-//             h1: {
-//                 fontSize: "5rem",
-//                 [breakpoints.down("xs")]: {
-//                     fontSize: "3rem"
-//                 }
-//             }
-//         },
-//         palette: {
-//             primary: pink,
-//             secondary: indigo 
-//         },
-//     }
-// }
 
 export default theme
 
