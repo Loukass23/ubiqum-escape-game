@@ -10,6 +10,9 @@ import { nextStep } from '../store/action/puzzleActions'
 import { puzzles } from '../config/puzzlesUbiqum'
 import moment from 'moment'
 import { addResult } from '../store/action/resultAction'
+import Slide from '@material-ui/core/Slide';
+
+
 
 
 
@@ -25,7 +28,7 @@ const styles = theme => ({
         padding: 20
 
     },
-        input: {
+    input: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         display: 'none',
@@ -52,11 +55,12 @@ class Puzzle extends Component {
             try: 5,
             solution: null,
             puzzle: null,
-            timer: null
+            timer: null,
+            checked: true
 
         }
     }
-   
+
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
@@ -73,8 +77,6 @@ class Puzzle extends Component {
         this.setState({ solution, puzzle })
         let name = this.state.name
 
-        console.log(solution)
-        console.log(name)
         if (solution.includes(name.toLowerCase())) {
             if (!puzzles[this.props.puzzle.id + 1]) {
                 let now = new Date()
@@ -85,12 +87,11 @@ class Puzzle extends Component {
                     time: timer,
                     team: this.props.team.team.name
                 }
-                console.log('done')
                 this.props.addResult(result)
 
             }
             else {
-                this.setState({ try: 5, error: "" })
+                this.setState({ try: 5, error: "", name: "" })
                 this.props.nextStep(this.props.puzzle.id + 1)
             }
 
@@ -112,6 +113,7 @@ class Puzzle extends Component {
         const { classes, puzzle } = this.props
         const thisPuzzle = puzzles[puzzle.id]
         return (
+
             <Paper className={classes.demo} >
                 <Grid container
                     spacing={0}
@@ -119,16 +121,17 @@ class Puzzle extends Component {
                     justify="center"
 
                 >
-
-                    <Grid item xs={12} >
-                        <Typography color="primary" variant="h3" gutterBottom>
-                            {thisPuzzle.title}
-                        </Typography>
-                        <Typography color="primary" variant="subtitle1" gutterBottom>
-                            {thisPuzzle.description}
-                        </Typography>
-                    </Grid>
-
+                    <Slide direction="right" in={true} mountOnEnter unmountOnExit>
+                        <Grid item xs={12}  >
+                            <Typography color="primary" variant="h4" gutterBottom>
+                                {thisPuzzle.title}
+                            </Typography>
+                            <Typography variant="subtitle1" gutterBottom>
+                                {thisPuzzle.description}
+                            </Typography>
+                            {thisPuzzle.img && <img src={thisPuzzle.img} alt=""></img>}
+                        </Grid>
+                    </Slide>
                     <Grid item xs={12} sm={6}>
                         <TextField
                             fullWidth
@@ -147,23 +150,25 @@ class Puzzle extends Component {
                             {this.state.error}
                         </Typography>
                     </Grid>
-                    <Grid item xs={6} >
-                        <Typography color="primary" variant="subtitle1" gutterBottom>
-                            Tries Left: {this.state.try}
-                        </Typography>
-                    </Grid>
-
-                    <Grid item xs={6}>
-                        <Button variant="contained" onClick={this.validate} color="primary" className={classes.button}>
-                            Hack
-                         </Button>
-                    </Grid>
-                    <Grid item xs={12} >
+                    <Grid item xs={4} >
                         <Typography color="primary" variant="subtitle2" gutterBottom>
                             Puzzle {puzzle.id}
 
                         </Typography>
                     </Grid>
+                    <Grid item xs={4}>
+                        <Button variant="contained" onClick={this.validate} color="primary" className={classes.button}>
+                            Hack
+                         </Button>
+                    </Grid>
+                    <Grid item xs={4} >
+                        <Typography color="primary" variant="subtitle1" gutterBottom>
+                            Tries Left: {this.state.try}
+                        </Typography>
+                    </Grid>
+
+
+
                 </Grid>
             </Paper>
         )
@@ -181,7 +186,7 @@ const mapStateToProps = (state) => {
     console.log(state)
     return {
         puzzle: state.puzzle,
-        team: state.team
+
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Puzzle))

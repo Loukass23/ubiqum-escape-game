@@ -15,6 +15,10 @@ const styles = theme => ({
         flexWrap: 'wrap',
         margin: 20
     },
+    demo: {
+        padding: 20
+
+    },
     input: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
@@ -44,7 +48,7 @@ const styles = theme => ({
     },
 });
 
-const passwords = ['password', '12345678', '00000000', 'qwertyui']
+const passwords = ['iloveyou', 'password', '12345678', '00000000', '11111111', 'aaaaaaaa', 'qwertyui']
 class FindPwd extends Component {
     constructor(props) {
         super(props)
@@ -81,7 +85,6 @@ class FindPwd extends Component {
         }
     }
 
-
     render() {
         const { classes, team } = this.props
         return (
@@ -92,17 +95,16 @@ class FindPwd extends Component {
                     justify="center"
 
                 >
+                    <Grid item xs={10} >
+                        <Typography color="primary" variant="h4" gutterBottom>
+                            Password Security
+                    </Typography>
+                        <Typography variant="subtitle1" gutterBottom>
+                            Oh no! The system has prompted us with an 8 character password check with limited tries. Usually these are hard to force, but many people don't give enough attention to the strength of their passwords. Perhaps we could try to guess what it is...
+                    </Typography>
 
-                    <Grid item xs={12} >
-                        <Typography color="primary" variant="h1" gutterBottom>
-                            {team.name}
-                        </Typography>
                     </Grid>
-                    <Grid item xs={12} >
-                        <Typography color="primary" variant="h6" gutterBottom>
-                            Brute Force This 8 Caracter Password
-                        </Typography>
-                    </Grid>
+
                     <Grid item xs={12} sm={6}>
                         <TextField
                             id="password"
@@ -131,7 +133,7 @@ class FindPwd extends Component {
                          </Button>
                     </Grid>
                 </Grid>
-            </Paper>
+            </Paper >
         )
     }
 }
@@ -144,7 +146,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 const mapStateToProps = (state) => {
     return {
-        team: state.team
+        team: state.team.team,
+
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(FindPwd))

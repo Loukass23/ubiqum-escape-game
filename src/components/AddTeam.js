@@ -15,6 +15,10 @@ const styles = theme => ({
         flexWrap: 'wrap',
         margin: 20
     },
+    demo: {
+        padding: 20
+
+    },
     input: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
@@ -71,14 +75,13 @@ class AddTeam extends Component {
 
                     >
 
-                        <Grid item xs={12} >
+
+                        <Grid item xs={6} >
+                            <Typography className="typewriter" color="primary" variant="h4" gutterBottom>Hello hackers, what is your team name?</Typography>
                         </Grid>
                         <Grid item xs={12} >
-                            <Typography color="primary" variant="h6" gutterBottom>
-                                Choose Your Hacker Team Name
-                        </Typography>
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={6} >
                             <TextField
                                 fullWidth
                                 required

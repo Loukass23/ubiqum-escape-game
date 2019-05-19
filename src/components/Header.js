@@ -13,15 +13,13 @@ class Header extends Component {
                     <div className="header">
                         <Anime
                             opacity={[0, 1]}
-                            translateY={[100, 0]}
+                            translateX={[500, 0]}
                             delay={(t, i) => 400 + i * 6000}
                             easing={'easeInOutQuad'}
                             duration={1000}
                         >
                             <div className="header-left-column">
-                        <img alt="" src={logo}  />
-
-                
+                                <img alt="" src={logo} />
                                 <Anime
                                     opacity={{
                                         delay: 2000,
@@ -32,15 +30,15 @@ class Header extends Component {
                                     easing={'easeInOutQuad'}
                                     duration={1000}
                                 >
-                                 <Typography color="primary" variant="h2" gutterBottom>
-                                 Escape Room
+                                    <Typography color="primary" variant="h5" gutterBottom>
+                                        Escape Room
                                  </Typography>
 
                                 </Anime>
 
                             </div>
                         </Anime>
-                        </div>
+                    </div>
                 </div>
             </div>
         );

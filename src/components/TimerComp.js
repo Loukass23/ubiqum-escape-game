@@ -10,15 +10,14 @@ export default function TimerComp() {
             <Timer
                 initialTime={0}
             >
-                {({ start, resume, pause, stop, reset, timerState }) => (
+                {() => (
                     <React.Fragment>
-                        <div>
-                            <Typography color="primary" variant="h6" gutterBottom>
+                        <div style={{ marginTop: 20 }}>
+                            <Typography variant="h4" gutterBottom>
                                 <Timer.Minutes /> :  <Timer.Seconds />
                             </Typography>
                         </div>
                         <br />
-
                     </React.Fragment>
                 )}
             </Timer>

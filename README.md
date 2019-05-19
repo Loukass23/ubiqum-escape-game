@@ -1,3 +1,14 @@
+
+Small app to test results for a coding theme escape room game during the opening event for Ubiqum coding school event in Berlin in 2019.
+The App test the payers answers against a configured file and sends back the scoreboard to firebase.
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
