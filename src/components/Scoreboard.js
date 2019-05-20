@@ -8,6 +8,13 @@ import { withStyles } from '@material-ui/core/styles';
 import Loader from 'react-loader-spinner'
 
 
+const styles = theme => ({
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        margin: 20
+    }
+})
 
 
 class Scoreboard extends Component {
@@ -72,5 +79,5 @@ const fconnect = firestoreConnect([
 
 export default compose(
     connect(mapStateToProps),
-    fconnect)(withStyles()(Scoreboard))
+    fconnect)(withStyles(styles)(Scoreboard))
 

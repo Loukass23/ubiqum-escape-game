@@ -67,9 +67,11 @@ class Puzzle extends Component {
         })
     }
     _handleKeyDown = (e) => {
+        console.log(e)
         if (e.key === 'Enter') {
             this.validate()
         }
+
     }
     validate = () => {
         const solution = puzzles[this.props.puzzle.id].solution
@@ -137,7 +139,7 @@ class Puzzle extends Component {
                             fullWidth
                             required
                             id="name"
-                            label="answer"
+                            label={thisPuzzle.res}
                             className={classes.textField}
                             margin="normal"
                             type="text"

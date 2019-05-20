@@ -20,7 +20,12 @@ const styles = theme => ({
 })
 
 class Landing extends Component {
-
+componentDidMount(){
+  window.onbeforeunload = function () {
+    this.onUnload();
+    return "";
+  }.bind(this);
+}
   render() {
     const { team, puzzle, result } = this.props
 
@@ -31,7 +36,6 @@ class Landing extends Component {
 
     return (
       <React.Fragment>
-
 
 
         {!result &&
@@ -61,5 +65,4 @@ const mapStateToProps = (state) => {
 
   }
 }
-export default connect(mapStateToProps)(withStyles(styles)(Landing
-))
+export default connect(mapStateToProps)(withStyles(styles)(Landing))
