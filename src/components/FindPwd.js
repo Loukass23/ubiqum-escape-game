@@ -56,7 +56,8 @@ class FindPwd extends Component {
         this.state = {
             password: '',
             error: '',
-            try: 5
+            try: 5,
+            blocked: false
         }
     }
     handleChange = (e) => {
@@ -74,21 +75,43 @@ class FindPwd extends Component {
         if (passwords.includes(pwd.toLowerCase())) {
             this.props.nextStep(1)
         }
-        else if (this.state.try === 0) {
+        else if (this.state.try === 1) {
             this.setState({
-                error: 'You have been blocked by the system'
+                blocked: true,
+                error: 'You have been blocked by the system for 30 seconds'
             })
+
+            setTimeout(this.restore, 30000)
         }
         else {
             let tries = this.state.try - 1
             this.setState({ error: 'wrong password', try: tries })
         }
     }
+    restore = () => {
+        this.setState({ blocked: false, error: '', try: 5 })
+    }
 
     render() {
         const { classes, team } = this.props
         return (
             <Paper className={classes.demo} >
+                {this.state.blocked &&
+                    <Grid container
+                        spacing={0}
+                        alignItems="center"
+                        justify="center"
+
+                    >
+                        <Grid item xs={12} >
+                            <Typography color="error" variant="h6" gutterBottom>
+                                {this.state.error}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+
+                }
+                {!this.state.blocked && 
                 <Grid container
                     spacing={0}
                     alignItems="center"
@@ -132,7 +155,7 @@ class FindPwd extends Component {
                             Hack
                          </Button>
                     </Grid>
-                </Grid>
+                </Grid>}
             </Paper >
         )
     }

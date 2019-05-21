@@ -9,14 +9,14 @@ export const puzzles =
     },
     2: {
         title: "Database query",
-        description: "Ok we are in the system now, let's find the classified documents to steal. For security purposes the adress of the database is not remembered by the computer. But I sure the employees must have written it down somewhere to remember it. Maybe look for where they store important documents.",
+        description: "Ok we are in the system now, let's find the classified documents to steal. For security purposes the adress of the database is not save in the computer. But I am sure that the employees must have written it down somewhere to remember it. Maybe look for where they store important documents.",
         solution: ["localhost:8890"],
         res: "Database URL"
 
     },
     3: {
         title: "Cypher",
-        description: "Data is retrieved! Oh wait... it is crypted. We need to find the cypher encription key to decode the message. ",
+        description: "Data is retrieved! Oh wait... it is crypted. We need to find the cypher encription key to decode the data. ",
         solution: ["test1"],
         img: "",
         res: "decripted data"

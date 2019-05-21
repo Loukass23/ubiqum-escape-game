@@ -56,7 +56,8 @@ class Puzzle extends Component {
             solution: null,
             puzzle: null,
             timer: null,
-            checked: true
+            blocked: false,
+
 
         }
     }
@@ -99,17 +100,25 @@ class Puzzle extends Component {
 
 
         }
-        else if (this.state.try === 0) {
+        else if (this.state.try === 1) {
+
             this.setState({
-                error: 'You have been blocked by the system'
+                blocked: true,
+                error: 'You have been blocked by the system for 30 seconds'
             })
+
+            setTimeout(this.restore, 30000)
+
+
         }
         else {
             let tries = this.state.try - 1
             this.setState({ error: 'Wrong answer', try: tries })
         }
     }
-
+    restore = () => {
+        this.setState({ blocked: false, error: '', try: 5 })
+    }
 
     render() {
         const { classes, puzzle } = this.props
@@ -117,7 +126,22 @@ class Puzzle extends Component {
         return (
 
             <Paper className={classes.demo} >
-                <Grid container
+                {this.state.blocked &&
+                    <Grid container
+                        spacing={0}
+                        alignItems="center"
+                        justify="center"
+
+                    >
+                        <Grid item xs={12} >
+                            <Typography color="error" variant="h6" gutterBottom>
+                                {this.state.error}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+
+                }
+                {!this.state.blocked && <Grid container
                     spacing={0}
                     alignItems="center"
                     justify="center"
@@ -171,7 +195,7 @@ class Puzzle extends Component {
 
 
 
-                </Grid>
+                </Grid>}
             </Paper>
         )
     }
