@@ -57,8 +57,12 @@ class Puzzle extends Component {
             puzzle: null,
             timer: null,
             blocked: false,
-
-
+            time: '',
+            sec: '',
+            min: '',
+            secForm: '',
+            minForm: '00',
+            timePast: ''
         }
     }
 
@@ -68,9 +72,11 @@ class Puzzle extends Component {
         })
     }
     _handleKeyDown = (e) => {
-        console.log(e)
+
         if (e.key === 'Enter') {
-            this.validate()
+            if (puzzles[this.props.puzzle.id + 1]) this.validate()
+            else this.finish()
+
         }
 
     }
@@ -83,8 +89,10 @@ class Puzzle extends Component {
         if (solution.includes(name.toLowerCase())) {
             if (!puzzles[this.props.puzzle.id + 1]) {
                 let now = new Date()
+
                 let timer = moment.utc(moment(now, "DD/MM/YYYY HH:mm:ss")
                     .diff(moment(this.props.team.startTime, "DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss")
+                console.log(this.props)
 
                 let result = {
                     time: timer,
@@ -93,12 +101,27 @@ class Puzzle extends Component {
                 this.props.addResult(result)
 
             }
+
             else {
                 this.setState({ try: 5, error: "", name: "" })
                 this.props.nextStep(this.props.puzzle.id + 1)
+                if (!puzzles[this.props.puzzle.id + 2]) {
+                    let now = new Date()
+                    console.log(now)
+                    let timer = moment.utc(moment(now, "DD/MM/YYYY HH:mm:ss")
+                        .diff(moment(this.props.team.startTime, "DD/MM/YYYY HH:mm:ss")))
+                    let sec = timer.format("ss")
+                    let min = timer.format("mm")
+                    let timePast = parseInt(sec) + (parseInt(min) * 60)
+
+
+                    this.setState({ min, sec, timePast })
+
+
+                }
+
+
             }
-
-
         }
         else if (this.state.try === 1) {
 
@@ -119,10 +142,51 @@ class Puzzle extends Component {
     restore = () => {
         this.setState({ blocked: false, error: '', try: 5 })
     }
+    finish = () => {
+        const { min, sec, minForm, secForm } = this.state
+        console.log(this.state)
+
+        if (min == minForm && sec == secForm) {
+            let now = new Date()
+
+            let timer = moment.utc(moment(now, "DD/MM/YYYY HH:mm:ss")
+                .diff(moment(this.props.team.startTime, "DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss")
+            console.log(this.props)
+
+            let result = {
+                time: timer,
+                team: this.props.team.team.name
+            }
+            this.props.addResult(result)
+
+        }
+        else if (this.state.try === 1) {
+
+            this.setState({
+                blocked: true,
+                error: 'You have been blocked by the system for 30 seconds'
+            })
+
+            setTimeout(this.restore, 30000)
+
+
+        }
+        else {
+            let tries = this.state.try - 1
+            this.setState({ error: 'Wrong answer', try: tries })
+        }
+
+
+    }
+
 
     render() {
-        const { classes, puzzle } = this.props
+        const { classes, puzzle, team } = this.props
         const thisPuzzle = puzzles[puzzle.id]
+
+
+
+
         return (
 
             <Paper className={classes.demo} >
@@ -131,7 +195,6 @@ class Puzzle extends Component {
                         spacing={0}
                         alignItems="center"
                         justify="center"
-
                     >
                         <Grid item xs={12} >
                             <Typography color="error" variant="h6" gutterBottom>
@@ -141,6 +204,9 @@ class Puzzle extends Component {
                     </Grid>
 
                 }
+
+
+
                 {!this.state.blocked && <Grid container
                     spacing={0}
                     alignItems="center"
@@ -155,22 +221,61 @@ class Puzzle extends Component {
                             <Typography variant="subtitle1" gutterBottom>
                                 {thisPuzzle.description}
                             </Typography>
-                            {thisPuzzle.img && <img src={thisPuzzle.img} alt=""></img>}
+                            {thisPuzzle.img && <img style={{ maxWidth: 500 }} src={thisPuzzle.img} alt=""></img>}
                         </Grid>
                     </Slide>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            fullWidth
-                            required
-                            id="name"
-                            label={thisPuzzle.res}
-                            className={classes.textField}
-                            margin="normal"
-                            type="text"
-                            onChange={this.handleChange}
-                            onKeyDown={this._handleKeyDown}
-                        />
-                    </Grid>
+
+
+                    {!thisPuzzle.last ?
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                fullWidth
+                                required
+                                id="name"
+                                label={thisPuzzle.res}
+                                className={classes.textField}
+                                margin="normal"
+                                type="text"
+                                onChange={this.handleChange}
+                                onKeyDown={this._handleKeyDown}
+                            />
+                        </Grid> :
+                        <React.Fragment>
+                            <Grid item xs={12} >
+                                <Typography color="error" variant="h6" gutterBottom>
+                                    {this.state.timePast} seconds
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={3} >
+                                <TextField
+                                    fullWidth
+                                    required
+                                    id="minForm"
+                                    label="min"
+                                    className={classes.textField}
+                                    margin="normal"
+                                    type="text"
+                                    onChange={this.handleChange}
+                                    onKeyDown={this._handleKeyDown}
+                                />
+                            </Grid>
+                            <Typography variant="h6" gutterBottom>
+                                :
+                            </Typography>
+                            <Grid item xs={3}>
+                                <TextField
+                                    fullWidth
+                                    required
+                                    id="secForm"
+                                    label="sec"
+                                    className={classes.textField}
+                                    margin="normal"
+                                    type="text"
+                                    onChange={this.handleChange}
+                                    onKeyDown={this._handleKeyDown}
+                                />
+                            </Grid>
+                        </React.Fragment>}
                     <Grid item xs={12} >
                         <Typography color="error" variant="h6" gutterBottom>
                             {this.state.error}
@@ -179,22 +284,28 @@ class Puzzle extends Component {
                     <Grid item xs={4} >
                         <Typography color="primary" variant="subtitle2" gutterBottom>
                             Puzzle {puzzle.id}
-
                         </Typography>
                     </Grid>
-                    <Grid item xs={4}>
-                        <Button variant="contained" onClick={this.validate} color="primary" className={classes.button}>
-                            Hack
+
+                    {!thisPuzzle.last ?
+                        <Grid item xs={4}>
+                            <Button variant="contained" onClick={this.validate} color="primary" className={classes.button}>
+                                Hack
                          </Button>
-                    </Grid>
+                        </Grid> :
+                        <Grid item xs={4}>
+                            <Button variant="contained" onClick={this.finish} color="primary" className={classes.button}>
+                                Escape
+                         </Button>
+                        </Grid>}
+
+
+
                     <Grid item xs={4} >
                         <Typography color="primary" variant="subtitle1" gutterBottom>
                             Tries Left: {this.state.try}
                         </Typography>
                     </Grid>
-
-
-
                 </Grid>}
             </Paper>
         )
@@ -212,6 +323,8 @@ const mapStateToProps = (state) => {
     console.log(state)
     return {
         puzzle: state.puzzle,
+        team: state.team,
+
 
     }
 }

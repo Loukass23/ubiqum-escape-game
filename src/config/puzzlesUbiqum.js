@@ -10,28 +10,30 @@ export const puzzles =
     2: {
         title: "Database query",
         description: "Ok we are in the system now, let's find the classified documents to steal. For security purposes the adress of the database is not save in the computer. But I am sure that the employees must have written it down somewhere to remember it. Maybe look for where they store important documents.",
-        solution: ["localhost:8890"],
+        solution: ["test"],
         res: "Database URL"
 
     },
     3: {
         title: "Cypher",
         description: "Data is retrieved! Oh wait... it is crypted. We need to find the cypher encription key to decode the data. ",
-        solution: ["test1"],
-        img: "",
+        solution: ["test"],
+        img: "https://res.cloudinary.com/ds3w3iwbk/image/upload/v1558551259/cypher.jpg",
         res: "decripted data"
     },
     4: {
         title: "Attack",
-        description: "We have the data, let's mess up the system now. Write some code",
-        solution: ["test1", "test2"],
-        res: ""
+        description: "We have the data, let's mess up the system now. Write an attack",
+        solution: ["test", "test2"],
+        res: "",
+        img: "https://res.cloudinary.com/ds3w3iwbk/image/upload/v1558551258/function.jpg"
     },
     5: {
-        title: "Time to erase out presence from the log and get out of here",
-        description: "last test",
+        title: "Log out",
+        description: "Time to erase our presence from the log and get out of here. To do so you just you just need to convert the amont of time you spent hacking below from second to a human readable format mm:ss ",
         solution: ["test"],
-        res: ""
+        res: "HH:mm:ss",
+        last: "true"
     },
 
 }
