@@ -92,7 +92,6 @@ class Puzzle extends Component {
 
                 let timer = moment.utc(moment(now, "DD/MM/YYYY HH:mm:ss")
                     .diff(moment(this.props.team.startTime, "DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss")
-                console.log(this.props)
 
                 let result = {
                     time: timer,
@@ -107,7 +106,6 @@ class Puzzle extends Component {
                 this.props.nextStep(this.props.puzzle.id + 1)
                 if (!puzzles[this.props.puzzle.id + 2]) {
                     let now = new Date()
-                    console.log(now)
                     let timer = moment.utc(moment(now, "DD/MM/YYYY HH:mm:ss")
                         .diff(moment(this.props.team.startTime, "DD/MM/YYYY HH:mm:ss")))
                     let sec = timer.format("ss")
@@ -144,14 +142,12 @@ class Puzzle extends Component {
     }
     finish = () => {
         const { min, sec, minForm, secForm } = this.state
-        console.log(this.state)
 
-        if (min == minForm && sec == secForm) {
+        if (min == minForm || min == '0'+minForm && sec == secForm) {
             let now = new Date()
 
             let timer = moment.utc(moment(now, "DD/MM/YYYY HH:mm:ss")
                 .diff(moment(this.props.team.startTime, "DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss")
-            console.log(this.props)
 
             let result = {
                 time: timer,
@@ -251,7 +247,7 @@ class Puzzle extends Component {
                                     fullWidth
                                     required
                                     id="minForm"
-                                    label="min"
+                                    label="mm"
                                     className={classes.textField}
                                     margin="normal"
                                     type="text"
@@ -267,7 +263,7 @@ class Puzzle extends Component {
                                     fullWidth
                                     required
                                     id="secForm"
-                                    label="sec"
+                                    label="ss"
                                     className={classes.textField}
                                     margin="normal"
                                     type="text"
@@ -320,7 +316,6 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         puzzle: state.puzzle,
         team: state.team,
