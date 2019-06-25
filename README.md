@@ -1,6 +1,79 @@
+The escape room consist of a series of logic puzzle around the world of coding (no actual coding skills required!)
 
-Small app to test results for a coding theme escape room game during the opening event for Ubiqum coding school event in Berlin in 2019.
-The App test the payers answers against a configured file and sends back the scoreboard to firebase.
+Ottavia Feletig and Lucas Dupias deigned this small game for the Berlin office opening event on May 23rd 2019.
+
+Rules:
+Teams of 2 or 3 persons have to find answers to logic questions through the interface of a custom made web app.
+
+The app give them description of puzzles and awaits an answer to input. Meanwhile, their time is being recorded. 
+
+The are 2 types of puzzles: 
+
+Puzzle of logic reasoning
+Puzzle where participants have to find clues around them in the room 
+
+
+Web App:
+It is a small React web app to display puzzle description and handle participants answers. Find example deployed at:
+
+https://ubiqum-escape-room.web.app/
+
+The main puzzles are being rendered from a configuration file (see bottom section)   with the following props :
+
+title (required)
+description (required)
+img (image URL optional)
+solution (required, answer of the puzzle, can be an arry of solutions) 
+res (placeholder for the solution input)
+
+
+Note that the opening and end puzzles are hard coded (not read from the configuration file:
+
+Opening puzzle require a 8 characters password. Answer is a list of the most common 8 character passwords, i.e "password" , "12345678" , "iloveyou" ...
+Ending puzzle require you to convert the time spent on the escape game from seconds to HH:MM:SS format. Note that if game goes over 1h it is considered lost.
+Scoreboard
+
+
+At the end of last puzzle, the time to solve is push to a firebase database at a leaderboard is displayed with all the result in firebase 
+
+Make your own Escape room
+open terminal
+clone git repo: git clone https://github.com/Loukass23/ubiqum-escape-game.git
+change directory into the folder : cd ubiqum-escape-game
+install dependencies : npm install
+run dev server: npm start
+Firebase congif file is not made public: 
+set up a new firebase project with your account
+create a file firebaseConfig.js in src/config/firebaseConfig.js
+ paste this content: 
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/auth'
+
+// Initialize Firebase
+// to replace with your firebase config
+const firebaseConfig = {
+apiKey: "********************************",
+authDomain: "***********************************",
+databaseURL: "********************************",
+projectId: "********************************",
+storageBucket: "********************************",
+messagingSenderId: "********************************",
+appId: "********************************"
+};
+firebase.initializeApp(firebaseConfig);
+
+
+export default firebase;
+Edit file src/config/puzzlesUbiqum.js to create your own fun puzzles!
+Have fun with it! 
+Share your puzzles!
+Give feedback
+This project was developed in a hurry and therefore contains several issues.
+
+You are welcome to report them on GitHub or create pull requests. 
+
+Contact Ottavia and Lucas if you need any help!
 
 
 
@@ -8,72 +81,47 @@ The App test the payers answers against a configured file and sends back the sco
 
 
 
------------------------------------------------------------------------------------------------------
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
+Puzzles configuration file  for the deployed example:
+export const puzzles =
+{
+1: {
+title: "Binary Error",
+description: "Our attack encoutered a date security check. You need to enter today's day (23) to unlock the system. Be careful, it needs to be converted into a binary number to be understood by the server. Below is an example of the binary number 13 to help you. Good luck!",
+solution: ["10111"],
+img: "https://res.cloudinary.com/ds3w3iwbk/image/upload/v1558098970/Binary.jpg",
+res: 'Binary number'
+},
+2: {
+title: "Database URL",
+description: "Ok we are in the system now, let's find the classified documents to steal. For security purposes the adress of the database is not save in the computer. But I am sure that the employees must have written it down somewhere to remember it. Maybe look for where they store important documents.",
+solution: ["localhost:8080"],
+res: "Database URL"
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+},
+3: {
+title: "Cypher",
+description: "Data is retrieved! Oh wait... it is crypted. We need to find the cypher encription key to decode the data. ",
+solution: ["ottavia and lucas are the best mentor ever"],
+img: "https://res.cloudinary.com/ds3w3iwbk/image/upload/v1558551259/cypher.jpg",
+res: "decripted data"
+},
+4: {
+title: "Attack",
+description: "We have the data, let's mess up the system now. Finish writing this attack. You need to change 2 variables values to complete the code",
+solution: ["iamlocked = true, ubiqumisgreat = true", "ubiqumisgreat = true, iamlocked = true"],
+res: "[variable 1 name] = [variable 1 value], [variable 2 name] = [variable 2 value]",
+img: "https://res.cloudinary.com/ds3w3iwbk/image/upload/v1558551258/function.jpg"
+},
+5: {
+title: "Log out",
+description: "Time to erase our presence from the log and get out of here. To do so you just you just need to convert the amont of time you spent hacking below from second to a human readable format mm:ss ",
+solution: ["test"],
+res: "HH:mm:ss",
+last: "true"
+},
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+}
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
