@@ -16,7 +16,8 @@ const styles = theme => ({
         margin: 20
     },
     demo: {
-        padding: 20
+        padding: 20,
+        height: '50vh'
 
     },
     input: {
@@ -111,51 +112,51 @@ class FindPwd extends Component {
                     </Grid>
 
                 }
-                {!this.state.blocked && 
-                <Grid container
-                    spacing={0}
-                    alignItems="center"
-                    justify="center"
+                {!this.state.blocked &&
+                    <Grid container
+                        spacing={0}
+                        alignItems="center"
+                        justify="center"
 
-                >
-                    <Grid item xs={10} >
-                        <Typography color="primary" variant="h4" gutterBottom>
-                            Password Security
+                    >
+                        <Grid item xs={10} >
+                            <Typography color="primary" variant="h4" gutterBottom>
+                                Password Security
                     </Typography>
-                        <Typography variant="subtitle1" gutterBottom>
-                            Oh no! The system has prompted us with an 8 character password check with limited tries. Usually these are hard to force, but many people don't give enough attention to the strength of their passwords. Perhaps we could try to guess what it is...
+                            <Typography variant="subtitle1" gutterBottom>
+                                Oh no! The system has prompted us with an 8 character password check with limited tries. Usually these are hard to force, but many people don't give enough attention to the strength of their passwords. Perhaps we could try to guess what it is...
                     </Typography>
 
-                    </Grid>
+                        </Grid>
 
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            id="password"
-                            label="Password"
-                            className={classes.textField}
-                            type="password"
-                            autoComplete="current-password"
-                            margin="normal"
-                            onChange={this.handleChange}
-                            onKeyDown={this._handleKeyDown}
-                        />
-                    </Grid>
-                    <Grid item xs={12} >
-                        <Typography color="error" variant="h6" gutterBottom>
-                            {this.state.error}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} >
-                        <Typography color="primary" variant="subtitle1" gutterBottom>
-                            Tries Left: {this.state.try}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button variant="contained" onClick={this.validate} color="primary" className={classes.button}>
-                            Hack
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                id="password"
+                                label="Password"
+                                className={classes.textField}
+                                type="password"
+                                autoComplete="current-password"
+                                margin="normal"
+                                onChange={this.handleChange}
+                                onKeyDown={this._handleKeyDown}
+                            />
+                        </Grid>
+                        <Grid item xs={12} >
+                            <Typography color="error" variant="h6" gutterBottom>
+                                {this.state.error}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} >
+                            <Typography color="primary" variant="subtitle1" gutterBottom>
+                                Tries Left: {this.state.try}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button variant="contained" onClick={this.validate} color="primary" className={classes.button}>
+                                Hack
                          </Button>
-                    </Grid>
-                </Grid>}
+                        </Grid>
+                    </Grid>}
             </Paper >
         )
     }

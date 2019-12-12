@@ -13,10 +13,13 @@ const styles = theme => ({
     container: {
         display: 'flex',
         flexWrap: 'wrap',
-        margin: 20
+        margin: 20,
+
+
     },
     demo: {
-        padding: 20
+        padding: 20,
+        height: '50vh'
 
     },
     input: {

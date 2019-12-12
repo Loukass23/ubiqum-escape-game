@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Grid } from '@material-ui/core'
+import { Grid, Avatar } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
@@ -12,12 +12,6 @@ import moment from 'moment'
 import { addResult } from '../store/action/resultAction'
 import Slide from '@material-ui/core/Slide';
 
-
-
-
-
-
-
 const styles = theme => ({
     container: {
         display: 'flex',
@@ -25,7 +19,9 @@ const styles = theme => ({
         margin: 20
     },
     demo: {
-        padding: 20
+        padding: 20,
+        height: '50vh'
+
 
     },
     input: {
@@ -78,8 +74,8 @@ class Puzzle extends Component {
             else this.finish()
 
         }
-
     }
+
     validate = () => {
         const solution = puzzles[this.props.puzzle.id].solution
         const puzzle = puzzles[this.props.puzzle.id]
@@ -87,18 +83,16 @@ class Puzzle extends Component {
         let name = this.state.name
 
         if (solution.includes(name.toLowerCase())) {
+
             if (!puzzles[this.props.puzzle.id + 1]) {
                 let now = new Date()
-
                 let timer = moment.utc(moment(now, "DD/MM/YYYY HH:mm:ss")
                     .diff(moment(this.props.team.startTime, "DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss")
-
                 let result = {
                     time: timer,
                     team: this.props.team.team.name
                 }
                 this.props.addResult(result)
-
             }
 
             else {
@@ -111,14 +105,8 @@ class Puzzle extends Component {
                     let sec = timer.format("ss")
                     let min = timer.format("mm")
                     let timePast = parseInt(sec) + (parseInt(min) * 60)
-
-
                     this.setState({ min, sec, timePast })
-
-
                 }
-
-
             }
         }
         else if (this.state.try === 1) {
@@ -143,7 +131,7 @@ class Puzzle extends Component {
     finish = () => {
         const { min, sec, minForm, secForm } = this.state
 
-        if (min == minForm || min == '0'+minForm && sec == secForm) {
+        if (min == minForm || min == '0' + minForm && sec == secForm) {
             let now = new Date()
 
             let timer = moment.utc(moment(now, "DD/MM/YYYY HH:mm:ss")
@@ -191,17 +179,18 @@ class Puzzle extends Component {
                         spacing={0}
                         alignItems="center"
                         justify="center"
+
                     >
-                        <Grid item xs={12} >
-                            <Typography color="error" variant="h6" gutterBottom>
-                                {this.state.error}
-                            </Typography>
-                        </Grid>
+                        <div style={{ backgroundImage: "url(https://media.giphy.com/media/V39CvtftZIveg/giphy.gif)", height: '500px' }}>
+                            <Grid item xs={12}   >
+                                <Typography color="error" variant="h6" gutterBottom>
+                                    {this.state.error}
+                                </Typography>
+                            </Grid>
+                        </div>
                     </Grid>
 
                 }
-
-
 
                 {!this.state.blocked && <Grid container
                     spacing={0}
@@ -234,6 +223,7 @@ class Puzzle extends Component {
                                 type="text"
                                 onChange={this.handleChange}
                                 onKeyDown={this._handleKeyDown}
+                                value={this.state.name}
                             />
                         </Grid> :
                         <React.Fragment>
@@ -303,6 +293,8 @@ class Puzzle extends Component {
                         </Typography>
                     </Grid>
                 </Grid>}
+
+
             </Paper>
         )
     }
